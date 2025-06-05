@@ -143,7 +143,7 @@ Min Basket Value: ${currency} ${coupon.minimum}`,
 		.addFields([
 			{ name: "Coupon ID", value: `${id}`, inline: true },
 			{ name: "Author", value: interaction.user.tag, inline: true },
-			{ name: "Timestamp (UTC)", value: require('moment-timezone')(Date.now()).tz('Europe/London').format("LLL") }
+			{ name: "Timestamp (UTC-04:00)", value: require('moment-timezone')(Date.now()).tz('America/New_York').format("LLL") }
 		]);
 		return await interaction.editReply({ embeds: [dataEmbed] });
 	};

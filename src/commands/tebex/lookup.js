@@ -30,7 +30,16 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 		const getPlayer = await fetch(`https://plugin.tebex.io/user/${player}`, method);
 
 		let data = await getPlayer.json();
-		if(data.error_code) return await interaction.editReply(`${info.error_code } | ${info.error_message}`);
+
+		if(data.error_code) {
+			const errorEmbed = new EmbedBuilder()
+			.setColor(color.error)
+			.setAuthor({name: interaction.options.getString("player")})
+			.setDescription("Player not found...");
+			return await interaction.editReply({ embeds: [errorEmbed] });
+			/* return await interaction.editReply(`${data.error_code } | ${data.error_message}`); */
+		};
+	
 		if(!data) return await interaction.editReply("Player not found");
 
 		let listOfPayments = [];
@@ -81,7 +90,7 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 			{ name: "Date", value: moment.utc(info.date).format("MMM DD, YYYY HH:mm"), inline: true },
 			{ name: "Gateway", value: info.gateway.name, inline: true },
 			{ name: "Status", value: info.status, inline: true },
-			{ name: "Creator Code", value: info.creator_code ?? "None D:", inline: true },
+			{ name: "Creator Code", value: info.creator_code ?? " ", inline: true },
 			{ name: "Email", value: `||${info.email}||`, inline: true },
 			{ name: "Player", value: `${info.player.name}`, inline: true },
 			{ name: "Packages", value: packages.join(", "), inline: true },

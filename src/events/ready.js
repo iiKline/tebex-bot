@@ -10,6 +10,6 @@ exports.run = async (client, bot, config) => {
 		await i[1].members.fetch();
 	};
 
-	client.user.setActivity("tebex.io", { type: ActivityType.Watching });
+	client.user.setActivity(config.ActivityLink, { type: ActivityType.Watching });
 	console.log(`${client.user.tag} Online`);
 };

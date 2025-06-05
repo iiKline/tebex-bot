@@ -18,16 +18,9 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 
 	for(var category of data.categories) {
 		const tempPkg = [];
-		const packages = category.packages;
-
-		if(packages.length) {
-			for(var pkg of packages) {
-				tempPkg.push(`**${currency} ${pkg.price}** - ${pkg.name}`);
-			};
-		} else {
-			tempPkg.push("No packages");
+		for(var pkg of category.packages) {
+			tempPkg.push(`**${currency} ${pkg.price}** - ${pkg.name}`);
 		};
-
 		fields.push({ name: category.name, value: tempPkg.join("\n"), inline: true });
 	};
 

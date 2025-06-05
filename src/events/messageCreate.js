@@ -1,25 +1,15 @@
-const { Events, ActivityType, MessageEmbed } = require("discord.js");
+const { Events, ActivityType, MessageEmbed } = require("discord.js"),
+color = require("../storage/color.json");
+
 
 exports.info = {
-	name: Events.MessageCreate,
+	name: Events.InteractionCreate,
 	once: false
 };
 
-exports.run = async(client, message, config) => {
-	if(message.author.bot || !message.guild) return;
+exports.run = async (client, interaction, config) => {
+	if(!interaction.isChatInputCommand()) return;
 
-	const msg = message.content.toLowerCase();
-	const prefix = await client.db.get(`prefix.${message.guild.id}`) ?? config.PREFIX;
-
-	if(msg.startsWith(prefix)) {
-		try {
-			require("../handle/command")(client, message);
-		} catch (e) {
-			console.error(e);
-		};
-	};
-
-	if(msg === `<@${client.user.id}>` || msg === `<@!${client.user.id}>`) {
-		return client.util.embed(message, `Prefix: **${prefix}**`, "info");
-	}
+	await require(`../commands/tebex/${interaction.commandName}`)
+	.run(client, interaction, color, "/", config);
 };

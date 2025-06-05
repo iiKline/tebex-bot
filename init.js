@@ -204,26 +204,57 @@ require("dotenv").config();
 				.setRequired(true)
 			)
 		),
-		
+
 		new SlashCommandBuilder().setName('claim')
-        	.setDescription("Claim information")
-        	.addSubcommand(subcmd =>
-            		subcmd
-            		.setName("transaction")
-            		.setDescription('Returns claim transaction information')
-            		.addStringOption(option =>
-                		option
-                		.setName('tid')
-                		.setDescription('Transaction ID')
-                		.setRequired(true)
-            		)
-		    	.addStringOption(option =>
-				option
-				.setName('did')
-				.setDescription('Discord ID')
-				.setRequired(true)
-		    	)
-        	)
+        .setDescription("Claim information")
+        .addSubcommand(subcmd =>
+            subcmd
+            .setName("transaction")
+            .setDescription('Returns claim transaction information')
+            .addStringOption(option =>
+                option
+                .setName('tid')
+                .setDescription('Transaction ID')
+                .setRequired(true)
+            )
+            .addStringOption(option =>
+                option
+                .setName('did')
+                .setDescription('Discord ID')
+                .setRequired(true)
+            )
+        ),
+
+        new SlashCommandBuilder().setName('note')
+        .setDescription("Add note")
+        .addSubcommand(subcmd =>
+            subcmd
+            .setName("add")
+            .setDescription('Add a note to a user')
+            .addUserOption(option =>
+                option
+                .setName('User')
+                .setDescription('Discord User')
+                .setRequired(true)
+            )
+            .addStringOption(option =>
+                option
+                .setName('note')
+                .setDescription('Note to add')
+                .setRequired(true)
+            )
+        )
+        .addSubcommand(subcmd =>
+            subcmd
+            .setName("view")
+            .setDescription('View a user\'s notes')
+            .addUserOption(option =>
+                option
+                .setName('User')
+                .setDescription('Discord User')
+                .setRequired(true)
+            )
+        )
 	]
 	.map(command => command.toJSON());
 
